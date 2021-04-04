@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql, useStaticQuery } from "gatsby"
 import { Styled } from "theme-ui"
 
 /**
@@ -6,13 +7,25 @@ import { Styled } from "theme-ui"
  */
 
 export default function Bio() {
+  const data = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            author
+            siteUrl
+          }
+        }
+      }
+    `
+  );
   return (
     <>
-      This is where <Styled.a href="http://example.com/">your name</Styled.a>
+      This is where <Styled.a href={data.site.siteMetadata.siteUrl}>{data.site.siteMetadata.author}</Styled.a>
       {` `}
       goes.
       <br />
-      Or whatever, you make the rules.
+      Or, whatever&mdash;you make the rules.
     </>
   )
 }
